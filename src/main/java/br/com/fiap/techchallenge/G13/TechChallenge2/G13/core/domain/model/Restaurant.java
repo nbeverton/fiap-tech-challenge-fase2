@@ -1,58 +1,121 @@
 package br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.domain.model;
 
+import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
+
 public class Restaurant {
-    private Long id;
+
+    private String id;
     private String name;
     private String address;
     private String cuisineType;
     private String openingHours;
-    private Long ownerId;
+    private String ownerId;
 
-    public Long getId() {
-        return id;
+    private Instant createdAt;
+    private Instant updatedAt;
+
+    public Restaurant(String id,
+                      String name,
+                      String address,
+                      String cuisineType,
+                      String openingHours,
+                      String ownerId,
+                      Instant createdAt,
+                      Instant updatedAt) {
+
+        this.id = requireNonBlank(id, "id");
+        this.name = requireNonBlank(name, "name");
+        this.address = requireNonBlank(address, "address");
+        this.cuisineType = cuisineType;
+        this.openingHours = openingHours;
+        this.ownerId = requireNonBlank(ownerId, "ownerId");
+        this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
+        this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public static Restaurant create(String name,
+                                    String address,
+                                    String cuisineType,
+                                    String openingHours,
+                                    String ownerId) {
+        Instant now = Instant.now();
+        return new Restaurant(
+                UUID.randomUUID().toString(),
+                name,
+                address,
+                cuisineType,
+                openingHours,
+                ownerId,
+                now,
+                now
+        );
+    }
+
+    private static String requireNonBlank(String value, String fieldName) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " must not be null or blank");
+        }
+        return value;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getCuisineType() {
         return cuisineType;
     }
 
-    public void setCuisineType(String cuisineType) {
-        this.cuisineType = cuisineType;
-    }
-
     public String getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(String openingHours) {
-        this.openingHours = openingHours;
-    }
-
-    public Long getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", cuisineType='" + cuisineType + '\'' +
+                ", openingHours='" + openingHours + '\'' +
+                ", ownerId='" + ownerId + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

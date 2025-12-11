@@ -22,10 +22,11 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody RestaurantDto dto) {
+    public ResponseEntity<Restaurant> create(@RequestBody RestaurantDto dto) {
         Restaurant restaurant = RestaurantMapper.toDomain(dto);
+        Restaurant created = service.create(restaurant);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(service.create(restaurant));
+                .body(created);
     }
 }
