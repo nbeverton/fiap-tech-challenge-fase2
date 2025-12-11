@@ -5,6 +5,6 @@ public record RestaurantDto(
         String address,
         String cuisineType,
         String openingHours,
-        Long ownerId
+        String ownerId
 ) {}
 
