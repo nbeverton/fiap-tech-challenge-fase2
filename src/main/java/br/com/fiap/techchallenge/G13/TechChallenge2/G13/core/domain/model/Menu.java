@@ -11,9 +11,7 @@ public class Menu {
     private final boolean dineInAvailable;
     private final String imageUrl;
 
-    private final Restaurant restaurant;
-
-    public Menu(String id, String name, String description, double price, boolean dineInAvailable, String imageUrl, Restaurant restaurant) {
+    public Menu(String id, String name, String description, double price, boolean dineInAvailable, String imageUrl) {
 
         this.id = requireNonBlank(id, "id");
         this.name = requireNonBlank(name, "name" );
@@ -26,22 +24,19 @@ public class Menu {
 
         this.dineInAvailable = dineInAvailable;
         this.imageUrl = imageUrl;
-        this.restaurant = Objects.requireNonNull(restaurant, "restaurant must not be null");
     }
 
     public static Menu create(String name,
                               String description,
                               double price,
-                              boolean dineInAvailable,
-                              String imageUrl,
-                              Restaurant restaurant) {
+                              boolean onlyForDineIn,
+                              String imageUrl) {
         return new Menu(UUID.randomUUID().toString(),
                 name,
                 description,
                 price,
-                dineInAvailable,
-                imageUrl,
-                restaurant);
+                onlyForDineIn,
+                imageUrl);
     }
 
     private static String requireNonBlank(String value, String fieldName) {
@@ -75,12 +70,6 @@ public class Menu {
         return imageUrl;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -88,12 +77,10 @@ public class Menu {
         return Objects.equals(id, menu.id);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
-    @Override
     public String toString() {
         return "Menu{" +
                 "id='" + id + '\'' +
@@ -102,7 +89,6 @@ public class Menu {
                 ", price=" + price +
                 ", dineInAvailable=" + dineInAvailable +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", restaurant=" + restaurant +
                 '}';
     }
 }

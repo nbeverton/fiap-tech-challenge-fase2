@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.persistence.entit
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
 import java.util.List;
 
 @Document(collection = "restaurants")
@@ -12,23 +11,23 @@ public class RestaurantEntity {
     private String id;
 
     private String name;
-    private String address;
+    private String addressId;
     private String cuisineType;
-    private String openingHours;
-    private String ownerId;
+    private OpeningHoursEntity openingHours;
+    private String userId;
 
     private List<MenuEntity> menu;
 
     public RestaurantEntity() {}
 
-    public RestaurantEntity(String id, String name, String address, String cuisineType,
-                            String openingHours, String ownerId, List<MenuEntity> menu) {
+    public RestaurantEntity(String id, String name, String addressId, String cuisineType,
+                            OpeningHoursEntity openingHours, String userId, List<MenuEntity> menu) {
         this.id = id;
         this.name = name;
-        this.address = address;
+        this.addressId = addressId;
         this.cuisineType = cuisineType;
         this.openingHours = openingHours;
-        this.ownerId = ownerId;
+        this.userId = userId;
         this.menu = menu;
     }
 
@@ -48,12 +47,12 @@ public class RestaurantEntity {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public String getCuisineType() {
@@ -64,20 +63,20 @@ public class RestaurantEntity {
         this.cuisineType = cuisineType;
     }
 
-    public String getOpeningHours() {
+    public OpeningHoursEntity getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(String openingHours) {
+    public void setOpeningHours(OpeningHoursEntity openingHours) {
         this.openingHours = openingHours;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<MenuEntity> getMenu() {
