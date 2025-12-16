@@ -3,25 +3,28 @@ package br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.persistence.docum
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.domain.enums.UserType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document("user")
+@Document(collection = "users")
 public class UserDocument {
 
     @Id
     private String id;
+
     private String name;
-    private UserType type;
+    private UserType userType;
     private String email;
     private String login;
     private String password;
+
     @CreatedDate
     private LocalDateTime createdAt;
-    @LastModifiedBy
-    private LocalDateTime updateAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
 
     public UserDocument() { }
@@ -44,11 +47,11 @@ public class UserDocument {
     }
 
     public UserType getType() {
-        return type;
+        return userType;
     }
 
     public void setType(UserType type) {
-        this.type = type;
+        this.userType = type;
     }
 
     public String getEmail() {
@@ -84,10 +87,10 @@ public class UserDocument {
     }
 
     public LocalDateTime getUpdateAt() {
-        return updateAt;
+        return updatedAt;
     }
 
     public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+        this.updatedAt = updateAt;
     }
 }
