@@ -12,4 +12,14 @@ public class Client extends User{
                 login,
                 password);
     }
+
+    public Client(String id, String name, String email, String login, String password) {
+        super(
+                id,
+                name,
+                UserType.CLIENT,
+                email,
+                login,
+                password);
+    }
 }

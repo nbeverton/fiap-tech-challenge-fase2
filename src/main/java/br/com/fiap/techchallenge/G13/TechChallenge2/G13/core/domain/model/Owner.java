@@ -12,4 +12,14 @@ public class Owner extends User{
                 login,
                 password);
     }
+
+    public Owner(String id, String name, String email, String login, String password) {
+        super(
+                id,
+                name,
+                UserType.OWNER,
+                email,
+                login,
+                password);
+    }
 }
