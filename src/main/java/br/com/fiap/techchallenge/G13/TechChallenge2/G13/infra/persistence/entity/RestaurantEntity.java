@@ -86,4 +86,5 @@ public class RestaurantEntity {
     public void setMenu(List<MenuEntity> menu) {
         this.menu = menu;
     }
+
 }
