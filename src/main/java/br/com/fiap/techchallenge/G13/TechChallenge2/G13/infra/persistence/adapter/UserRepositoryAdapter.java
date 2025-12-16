@@ -3,7 +3,7 @@ package br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.persistence.adapt
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.domain.model.User;
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.usecase.out.UserRepositoryPort;
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.persistence.documents.UserDocument;
-import br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.web.mapper.UserMapper;
+import br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.web.mapper.user.UserMapper;
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.persistence.repository.SpringUserRepository;
 import org.springframework.stereotype.Component;
 
