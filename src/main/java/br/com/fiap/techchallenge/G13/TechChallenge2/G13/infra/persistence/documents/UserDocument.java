@@ -46,12 +46,12 @@ public class UserDocument {
         this.name = name;
     }
 
-    public UserType getType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setType(UserType type) {
-        this.userType = type;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public String getEmail() {

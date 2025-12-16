@@ -6,7 +6,7 @@ public abstract class User {
 
     protected String id;
     protected String name;
-    protected UserType type;
+    protected UserType userType;
     protected String email;
     protected String login;
     protected String password;
@@ -16,9 +16,34 @@ public abstract class User {
     // and can be added later if needed.
     public User(String name, UserType type, String email, String login, String password) {
         this.name = name;
-        this.type = type;
+        this.userType = type;
         this.email = email;
         this.login = login;
         this.password = password;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
