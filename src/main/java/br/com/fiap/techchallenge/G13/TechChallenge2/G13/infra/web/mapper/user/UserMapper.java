@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.web.mapper;
+package br.com.fiap.techchallenge.G13.TechChallenge2.G13.infra.web.mapper.user;
 
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.domain.enums.UserType;
 import br.com.fiap.techchallenge.G13.TechChallenge2.G13.core.domain.model.Client;
@@ -26,11 +26,11 @@ public class UserMapper {
     }
 
 
-    public static User toDomain(UserDocument document){
+    public static User toDomain(UserDocument document) {
 
-        if(document.getUserType() == UserType.OWNER){
-
+        if (document.getUserType() == UserType.OWNER) {
             return new Owner(
+                    document.getId(),
                     document.getName(),
                     document.getEmail(),
                     document.getLogin(),
@@ -38,9 +38,9 @@ public class UserMapper {
             );
         }
 
-        if(document.getUserType() == UserType.CLIENT){
-
+        if (document.getUserType() == UserType.CLIENT) {
             return new Client(
+                    document.getId(),
                     document.getName(),
                     document.getEmail(),
                     document.getLogin(),
@@ -48,10 +48,6 @@ public class UserMapper {
             );
         }
 
-        // If a document comes with a null, invalid, or unexpected user type
-        throw new IllegalArgumentException(
-                "Unsupported user type> " + document.getUserType()
-        );
-
+        throw new IllegalArgumentException("Unsupported user type: " + document.getUserType());
     }
 }
