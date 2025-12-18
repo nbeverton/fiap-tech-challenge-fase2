@@ -1,12 +1,14 @@
-package br.com.fiap.techchallenge.infra.persistence.entity;
+package br.com.fiap.techchallenge.infra.persistence.documents;
 
+import br.com.fiap.techchallenge.infra.persistence.entity.MenuEntity;
+import br.com.fiap.techchallenge.infra.persistence.entity.OpeningHoursEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document(collection = "restaurants")
-public class RestaurantEntity {
+public class RestaurantDocument {
     @Id
     private String id;
 
@@ -18,10 +20,10 @@ public class RestaurantEntity {
 
     private List<MenuEntity> menu;
 
-    public RestaurantEntity() {}
+    public RestaurantDocument() {}
 
-    public RestaurantEntity(String id, String name, String addressId, String cuisineType,
-                            OpeningHoursEntity openingHours, String userId, List<MenuEntity> menu) {
+    public RestaurantDocument(String id, String name, String addressId, String cuisineType,
+                              OpeningHoursEntity openingHours, String userId, List<MenuEntity> menu) {
         this.id = id;
         this.name = name;
         this.addressId = addressId;

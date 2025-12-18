@@ -7,7 +7,7 @@ import br.com.fiap.techchallenge.core.domain.model.Restaurant;
 import br.com.fiap.techchallenge.core.usecase.out.RestaurantRepositoryPort;
 import br.com.fiap.techchallenge.infra.persistence.entity.MenuEntity;
 import br.com.fiap.techchallenge.infra.persistence.entity.OpeningHoursEntity;
-import br.com.fiap.techchallenge.infra.persistence.entity.RestaurantEntity;
+import br.com.fiap.techchallenge.infra.persistence.documents.RestaurantDocument;
 import br.com.fiap.techchallenge.infra.persistence.repository.SpringRestaurantRepository;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +26,8 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
 
     @Override
     public Restaurant save(Restaurant restaurant) {
-        RestaurantEntity entity = toEntity(restaurant);
-        RestaurantEntity saved = repo.save(entity);
+        RestaurantDocument entity = toEntity(restaurant);
+        RestaurantDocument saved = repo.save(entity);
         return toDomain(saved);
     }
 
@@ -49,8 +49,8 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
         repo.deleteById(id);
     }
 
-    private RestaurantEntity toEntity(Restaurant restaurant) {
-        RestaurantEntity entity = new RestaurantEntity();
+    private RestaurantDocument toEntity(Restaurant restaurant) {
+        RestaurantDocument entity = new RestaurantDocument();
 
         entity.setId(restaurant.getId());
         entity.setName(restaurant.getName());
@@ -70,7 +70,7 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
         return entity;
     }
 
-    private Restaurant toDomain(RestaurantEntity entity) {
+    private Restaurant toDomain(RestaurantDocument entity) {
         List<Menu> menu = entity.getMenu() == null ? List.of() : entity.getMenu().stream()
                 .map(this::menuToDomain)
                 .collect(Collectors.toList());

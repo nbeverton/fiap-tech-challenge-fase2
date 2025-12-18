@@ -6,7 +6,7 @@ import br.com.fiap.techchallenge.core.domain.model.OpeningHours;
 import br.com.fiap.techchallenge.core.domain.model.Restaurant;
 import br.com.fiap.techchallenge.core.usecase.out.MenuRepositoryPort;
 import br.com.fiap.techchallenge.infra.persistence.entity.MenuEntity;
-import br.com.fiap.techchallenge.infra.persistence.entity.RestaurantEntity;
+import br.com.fiap.techchallenge.infra.persistence.documents.RestaurantDocument;
 import br.com.fiap.techchallenge.infra.persistence.repository.SpringRestaurantRepository;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
 
     @Override
     public Menu save(String restaurantId, Menu menu) {
-        RestaurantEntity restaurantEntity = getRestaurantOrThrow(restaurantId);
+        RestaurantDocument restaurantEntity = getRestaurantOrThrow(restaurantId);
 
         List<MenuEntity> menuList = restaurantEntity.getMenu();
         if (menuList == null) {
@@ -43,7 +43,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
             menuList.add(menuEntity);
         }
 
-        RestaurantEntity savedRestaurant = restaurantRepository.save(restaurantEntity);
+        RestaurantDocument savedRestaurant = restaurantRepository.save(restaurantEntity);
 
         MenuEntity savedMenuEntity = savedRestaurant.getMenu().stream()
                 .filter(m -> m.getId().equals(menuEntity.getId()))
@@ -55,7 +55,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
 
     @Override
     public void deleteById(String restaurantId, String menuId) {
-        RestaurantEntity restaurantEntity = getRestaurantOrThrow(restaurantId);
+        RestaurantDocument restaurantEntity = getRestaurantOrThrow(restaurantId);
 
         List<MenuEntity> menus = Optional.ofNullable(restaurantEntity.getMenu())
                 .orElseGet(ArrayList::new);
@@ -87,7 +87,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
 
     @Override
     public List<Menu> findByRestaurantId(String restaurantId) {
-        RestaurantEntity restaurantEntity = getRestaurantOrThrow(restaurantId);
+        RestaurantDocument restaurantEntity = getRestaurantOrThrow(restaurantId);
 
         List<MenuEntity> entities = Optional.ofNullable(restaurantEntity.getMenu())
                 .orElse(List.of());
@@ -99,7 +99,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
 
     // ---------- helpers privados ----------
 
-    private RestaurantEntity getRestaurantOrThrow(String restaurantId) {
+    private RestaurantDocument getRestaurantOrThrow(String restaurantId) {
         return restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurante " + restaurantId + " não encontrado"));
     }
@@ -135,7 +135,7 @@ public class MenuRepositoryAdapter implements MenuRepositoryPort {
         );
     }
 
-    private Restaurant toRestaurantDomain(RestaurantEntity entity) {
+    private Restaurant toRestaurantDomain(RestaurantDocument entity) {
         List<Menu> menu = Optional.ofNullable(entity.getMenu())
                 .orElse(List.of()).stream()
                 .map(this::toDomain)
