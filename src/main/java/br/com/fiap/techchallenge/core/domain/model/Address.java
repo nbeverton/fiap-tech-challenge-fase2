@@ -52,5 +52,60 @@ public class Address {
     }
 
 
+    public String getPostalCode() {
+        return postalCode;
+    }
 
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getStateProvince() {
+        return stateProvince;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+
+    public void updatePostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void updateStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public void updateAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public void updateNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public void updateCity(String city) {
+        this.city = city;
+    }
+
+    public void updateStateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
+    }
+
+    public void updateCountry(String country) {
+        this.country = country;
+    }
 }
