@@ -22,6 +22,7 @@ public class UpdateAddressUseCaseImpl implements UpdateAddressUseCase {
 
         existingAddress.updatePostalCode(address.getPostalCode());
         existingAddress.updateStreetName(address.getStreetName());
+        existingAddress.updateStreetNumber(address.getStreetNumber());
         existingAddress.updateAdditionalInfo(address.getAdditionalInfo());
         existingAddress.updateNeighborhood(address.getNeighborhood());
         existingAddress.updateCity(address.getCity());

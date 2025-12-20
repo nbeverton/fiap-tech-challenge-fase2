@@ -5,6 +5,7 @@ public class Address {
     private final String id;
     private String postalCode;
     private String streetName;
+    private int streetNumber;
     private String additionalInfo;
     private String neighborhood;
     private String city;
@@ -16,6 +17,7 @@ public class Address {
             String id,
             String postalCode,
             String streetName,
+            int streetNumber,
             String additionalInfo,
             String neighborhood,
             String city,
@@ -25,6 +27,7 @@ public class Address {
         this.id = id;
         this.postalCode = postalCode;
         this.streetName = streetName;
+        this.streetNumber = streetNumber;
         this.additionalInfo = additionalInfo;
         this.neighborhood = neighborhood;
         this.city = city;
@@ -35,6 +38,7 @@ public class Address {
 
     public Address(String postalCode,
                    String streetName,
+                   int streetNumber,
                    String additionalInfo,
                    String neighborhood,
                    String city,
@@ -44,6 +48,7 @@ public class Address {
         this.id = null;
         this.postalCode = postalCode;
         this.streetName = streetName;
+        this.streetNumber = streetNumber;
         this.additionalInfo = additionalInfo;
         this.neighborhood = neighborhood;
         this.city = city;
@@ -58,6 +63,10 @@ public class Address {
 
     public String getStreetName() {
         return streetName;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
     }
 
     public String getAdditionalInfo() {
@@ -87,6 +96,10 @@ public class Address {
 
     public void updateStreetName(String streetName) {
         this.streetName = streetName;
+    }
+
+    public void updateStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
     public void updateAdditionalInfo(String additionalInfo) {
