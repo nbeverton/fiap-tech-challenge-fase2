@@ -56,6 +56,9 @@ public class Address {
         this.country = country;
     }
 
+    public String getId() {
+        return id;
+    }
 
     public String getPostalCode() {
         return postalCode;
