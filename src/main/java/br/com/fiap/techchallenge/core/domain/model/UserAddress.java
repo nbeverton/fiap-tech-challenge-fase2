@@ -29,4 +29,29 @@ public class UserAddress {
         this.label = label;
         this.principal = principal;
     }
+
+
+    public AddressType getType() {
+        return type;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void updateType(AddressType type) {
+        this.type = type;
+    }
+
+    public void updateLabel(String label) {
+        this.label = label;
+    }
+
+    public void updatePrincipal(boolean principal) {
+        this.principal = principal;
+    }
 }
