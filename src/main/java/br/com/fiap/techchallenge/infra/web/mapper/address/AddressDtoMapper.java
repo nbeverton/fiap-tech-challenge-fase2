@@ -35,18 +35,18 @@ public class AddressDtoMapper {
         );
     }
 
-    public static Address toResponse(AddressResponse response){
+    public static AddressResponse toResponse(Address response){
 
-        return new Address(
-                response.id(),
-                response.postalCode(),
-                response.streetName(),
-                response.streetNumber(),
-                response.additionalInfo(),
-                response.neighborhood(),
-                response.city(),
-                response.stateProvince(),
-                response.country()
+        return new AddressResponse(
+                response.getId(),
+                response.getPostalCode(),
+                response.getStreetName(),
+                response.getStreetNumber(),
+                response.getAdditionalInfo(),
+                response.getNeighborhood(),
+                response.getCity(),
+                response.getStateProvince(),
+                response.getCountry()
         );
     }
 }

@@ -12,7 +12,7 @@ public class AddressMapper {
 
         AddressDocument document = new AddressDocument();
 
-        document.setId(address.geti);
+        document.setId(address.getId());
         document.setPostalCode(address.getPostalCode());
         document.setStreetName(address.getStreetName());
         document.setStreetNumber(address.getStreetNumber());
