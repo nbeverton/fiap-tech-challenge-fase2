@@ -69,7 +69,7 @@ public class AddressController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressResponse> findById(String id){
+    public ResponseEntity<AddressResponse> findById(@PathVariable String id){
 
         return findAddressByIdUseCase.execute(id)
                 .map(AddressDtoMapper::toResponse)
