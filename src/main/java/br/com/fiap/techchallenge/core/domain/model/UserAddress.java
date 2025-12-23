@@ -30,6 +30,11 @@ public class UserAddress {
         this.principal = principal;
     }
 
+    public String getId() { return id; }
+
+    public String getUserId() { return userId; }
+
+    public String getAddressId() { return addressId; }
 
     public AddressType getType() {
         return type;
