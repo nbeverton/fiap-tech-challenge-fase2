@@ -15,12 +15,13 @@ public class UpdateUserAddressUseCaseImpl implements UpdateUserAddressUseCase {
     @Override
     public UserAddress execute(String id, UserAddress userAddress) {
 
-        UserAddress userAddressToUpdate = userAddressRepository.findUserAddressById(id);
+        UserAddress existingUserAddress = userAddressRepository.findUserAddressById(id)
+                        .orElseThrow(() -> new RuntimeException("User Address not found with id: " + id));
 
-        userAddressToUpdate.updateType(userAddress.getType());
-        userAddressToUpdate.updateLabel(userAddress.getLabel());
-        userAddressToUpdate.updatePrincipal(userAddress.isPrincipal());
+        existingUserAddress.updateType(userAddress.getType());
+        existingUserAddress.updateLabel(userAddress.getLabel());
+        existingUserAddress.updatePrincipal(userAddress.isPrincipal());
 
-        return userAddressRepository.save(userAddressToUpdate);
+        return userAddressRepository.save(existingUserAddress);
     }
 }
