@@ -8,7 +8,7 @@ import br.com.fiap.techchallenge.core.usecase.in.restaurant.ListRestaurantsUseCa
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.UpdateRestaurantUseCase;
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantRequest;
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantResponse;
-import br.com.fiap.techchallenge.infra.web.mapper.restaurant.RestaurantMapper;
+import br.com.fiap.techchallenge.infra.persistence.mapper.restaurant.RestaurantMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

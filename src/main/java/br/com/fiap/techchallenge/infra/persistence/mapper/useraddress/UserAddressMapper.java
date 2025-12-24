@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.infra.web.mapper.useraddress;
+package br.com.fiap.techchallenge.infra.persistence.mapper.useraddress;
 
 import br.com.fiap.techchallenge.core.domain.enums.AddressType;
 import br.com.fiap.techchallenge.core.domain.model.UserAddress;

@@ -4,7 +4,7 @@ import br.com.fiap.techchallenge.core.domain.model.Menu;
 import br.com.fiap.techchallenge.core.usecase.in.menu.*;
 import br.com.fiap.techchallenge.infra.web.dto.menu.MenuRequest;
 import br.com.fiap.techchallenge.infra.web.dto.menu.MenuResponse;
-import br.com.fiap.techchallenge.infra.web.mapper.menu.MenuMapper;
+import br.com.fiap.techchallenge.infra.persistence.mapper.menu.MenuMapper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

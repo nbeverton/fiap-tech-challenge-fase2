@@ -3,7 +3,7 @@ package br.com.fiap.techchallenge.infra.persistence.adapter;
 import br.com.fiap.techchallenge.core.domain.model.User;
 import br.com.fiap.techchallenge.core.usecase.out.UserRepositoryPort;
 import br.com.fiap.techchallenge.infra.persistence.documents.UserDocument;
-import br.com.fiap.techchallenge.infra.web.mapper.user.UserMapper;
+import br.com.fiap.techchallenge.infra.persistence.mapper.user.UserMapper;
 import br.com.fiap.techchallenge.infra.persistence.repository.SpringUserRepository;
 import org.springframework.stereotype.Component;
 

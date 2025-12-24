@@ -4,7 +4,7 @@ import br.com.fiap.techchallenge.core.domain.model.UserAddress;
 import br.com.fiap.techchallenge.core.usecase.out.UserAddressRepositoryPort;
 import br.com.fiap.techchallenge.infra.persistence.documents.UserAddressDocument;
 import br.com.fiap.techchallenge.infra.persistence.repository.SpringUserAddressRepository;
-import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressMapper;
+import br.com.fiap.techchallenge.infra.persistence.mapper.useraddress.UserAddressMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

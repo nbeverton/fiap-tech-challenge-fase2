@@ -4,7 +4,7 @@ import br.com.fiap.techchallenge.core.domain.model.Address;
 import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
 import br.com.fiap.techchallenge.infra.persistence.documents.AddressDocument;
 import br.com.fiap.techchallenge.infra.persistence.repository.SpringAddressRepository;
-import br.com.fiap.techchallenge.infra.web.mapper.address.AddressMapper;
+import br.com.fiap.techchallenge.infra.persistence.mapper.address.AddressMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

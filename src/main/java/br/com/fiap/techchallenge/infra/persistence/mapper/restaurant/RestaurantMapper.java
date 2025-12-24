@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.infra.web.mapper.restaurant;
+package br.com.fiap.techchallenge.infra.persistence.mapper.restaurant;
 
 import br.com.fiap.techchallenge.core.domain.enums.CuisineType;
 import br.com.fiap.techchallenge.core.domain.model.Menu;

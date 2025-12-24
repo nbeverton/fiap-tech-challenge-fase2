@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.infra.web.mapper.user;
+package br.com.fiap.techchallenge.infra.persistence.mapper.user;
 
 import br.com.fiap.techchallenge.core.domain.enums.UserType;
 import br.com.fiap.techchallenge.core.domain.model.Client;

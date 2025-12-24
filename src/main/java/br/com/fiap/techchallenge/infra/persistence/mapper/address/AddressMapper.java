@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.infra.web.mapper.address;
+package br.com.fiap.techchallenge.infra.persistence.mapper.address;
 
 import br.com.fiap.techchallenge.core.domain.model.Address;
 import br.com.fiap.techchallenge.infra.persistence.documents.AddressDocument;
