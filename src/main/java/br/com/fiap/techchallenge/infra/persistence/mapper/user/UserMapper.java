@@ -20,7 +20,7 @@ public class UserMapper {
         document.setEmail(user.getEmail());
         document.setLogin(user.getLogin());
         document.setPassword(user.getPassword());
-        document.setUserType(user.getUserType());
+        document.setUserType(user.getUserType().name());
 
         return document;
     }
@@ -28,26 +28,31 @@ public class UserMapper {
 
     public static User toDomain(UserDocument document) {
 
-        if (document.getUserType() == UserType.OWNER) {
-            return new Owner(
+        UserType type = UserType.valueOf(document.getUserType());
+
+        return switch (type){
+            case OWNER -> new Owner(
                     document.getId(),
                     document.getName(),
                     document.getEmail(),
                     document.getLogin(),
                     document.getPassword()
             );
-        }
-
-        if (document.getUserType() == UserType.CLIENT) {
-            return new Client(
+            case CLIENT -> new Client(
                     document.getId(),
                     document.getName(),
                     document.getEmail(),
                     document.getLogin(),
                     document.getPassword()
             );
-        }
+        };
+    }
 
-        throw new IllegalArgumentException("Unsupported user type: " + document.getUserType());
+    public static void updateDocument(User user, UserDocument document) {
+        document.setName(user.getName());
+        document.setUserType(user.getUserType().name());
+        document.setEmail(user.getEmail());
+        document.setLogin(user.getLogin());
+        document.setPassword(user.getPassword());
     }
 }

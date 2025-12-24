@@ -13,21 +13,23 @@ public class UserDtoMapper {
     private UserDtoMapper(){}
 
     public static User toDomain(CreateUserRequest request) {
-        if (request.type() == UserType.OWNER) {
-            return new Owner(
+
+        UserType type = UserType.valueOf(request.type());
+
+        return switch (type){
+            case OWNER -> new Owner(
                     request.name(),
                     request.email(),
                     request.login(),
                     request.password()
             );
-        }
-
-        return new Client(
-                request.name(),
-                request.email(),
-                request.login(),
-                request.password()
-        );
+            case CLIENT -> new Client(
+                    request.name(),
+                    request.email(),
+                    request.login(),
+                    request.password()
+            );
+        };
     }
 
     public static User toDomain(UpdateUserRequest input) {
@@ -43,7 +45,7 @@ public class UserDtoMapper {
         return new UserResponse(
                 user.getId(),
                 user.getName(),
-                user.getUserType(),
+                user.getUserType().name(),
                 user.getEmail(),
                 user.getLogin()
         );

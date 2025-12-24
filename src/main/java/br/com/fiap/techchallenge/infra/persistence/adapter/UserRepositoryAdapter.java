@@ -27,14 +27,9 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
         UserDocument document = getOrCreate(user.getId());
 
-        document.setName(user.getName());
-        document.setUserType(user.getUserType());
-        document.setEmail(user.getEmail());
-        document.setLogin(user.getLogin());
-        document.setPassword(user.getPassword());
+        UserMapper.updateDocument(user, document);
 
         UserDocument saved = repository.save(document);
-
         return UserMapper.toDomain(saved);
     }
 
