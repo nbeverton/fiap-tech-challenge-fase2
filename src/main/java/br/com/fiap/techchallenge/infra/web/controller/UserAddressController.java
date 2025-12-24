@@ -58,6 +58,7 @@ public class UserAddressController {
     }
 
 
+    @PutMapping("/{id}")
     public ResponseEntity<UserAddressResponse> update(
             @PathVariable String id,
             @RequestBody UpdateUserAddressRequest request
