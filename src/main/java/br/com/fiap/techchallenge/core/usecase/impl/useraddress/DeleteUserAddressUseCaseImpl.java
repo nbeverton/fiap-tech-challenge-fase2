@@ -14,6 +14,6 @@ public class DeleteUserAddressUseCaseImpl implements DeleteUserAddressUseCase {
     @Override
     public void execute(String id) {
 
-        userAddressRepository.delete(id);
+        userAddressRepository.deleteById(id);
     }
 }
