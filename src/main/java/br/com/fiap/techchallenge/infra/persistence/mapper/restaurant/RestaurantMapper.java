@@ -6,22 +6,21 @@ import br.com.fiap.techchallenge.core.domain.model.OpeningHours;
 import br.com.fiap.techchallenge.core.domain.model.Restaurant;
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantRequest;
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantResponse;
-import br.com.fiap.techchallenge.infra.web.dto.menu.MenuResponse;
-import br.com.fiap.techchallenge.infra.web.mapper.menu.MenuResponseMapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RestaurantMapper {
 
     private RestaurantMapper() {}
 
-    // REQUEST → DOMAIN
-    public static Restaurant toDomain(RestaurantRequest request) {
+    /* ======================
+       REQUEST -> DOMAIN
+       ====================== */
 
-        OpeningHours openingHours = request.openingHours() == null
-                ? null
-                : new OpeningHours(
+    public static Restaurant toDomain(RestaurantRequest request) {
+        if (request == null) return null;
+
+        OpeningHours opening = new OpeningHours(
                 request.openingHours().opens(),
                 request.openingHours().closes()
         );
@@ -29,50 +28,67 @@ public class RestaurantMapper {
         List<Menu> menu = request.menu() == null
                 ? List.of()
                 : request.menu().stream()
-                .map(m -> Menu.create(
-                        m.name(),
-                        m.description(),
-                        m.price(),
-                        m.dineInAvailable(),
-                        m.imageUrl()
-                ))
-                .collect(Collectors.toList());
+                .map(RestaurantMapper::toMenuDomain)
+                .toList();
 
-        return new Restaurant(
-                null,
+        return Restaurant.create(
                 request.name(),
                 request.addressId(),
                 CuisineType.valueOf(request.cuisineType()),
-                openingHours,
+                opening,
                 request.userId(),
                 menu
         );
     }
 
-    // DOMAIN → RESPONSE
-    public static RestaurantResponse toResponse(Restaurant restaurant) {
-        if (restaurant == null) return null;
+    /* ======================
+       DOMAIN -> RESPONSE
+       ====================== */
 
-        List<MenuResponse> menu = restaurant.getMenu() == null
-                ? List.of()
-                : restaurant.getMenu().stream()
-                .map(MenuResponseMapper::toResponse)
-                .toList();
+    public static RestaurantResponse toResponse(Restaurant domain) {
+        if (domain == null) return null;
+
+        List<RestaurantResponse.MenuResponse> menu =
+                domain.getMenu().stream()
+                        .map(RestaurantMapper::toMenuResponse)
+                        .toList();
 
         return new RestaurantResponse(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getAddressId(),
-                restaurant.getCuisineType().name(),
-                restaurant.getOpeningHours() == null
-                        ? null
-                        : new RestaurantResponse.OpeningHoursResponse(
-                        restaurant.getOpeningHours().getOpens(),
-                        restaurant.getOpeningHours().getCloses()
+                domain.getId(),
+                domain.getName(),
+                domain.getAddressId(),
+                domain.getCuisineType().name(),
+                new RestaurantResponse.OpeningHoursResponse(
+                        domain.getOpeningHours().getOpens(),
+                        domain.getOpeningHours().getCloses()
                 ),
-                restaurant.getUserId(),
+                domain.getUserId(),
                 menu
         );
     }
-}
 
+    /* ======================
+       MENU (INTERNO)
+       ====================== */
+
+    private static Menu toMenuDomain(RestaurantRequest.MenuRequest dto) {
+        return Menu.create(
+                dto.name(),
+                dto.description(),
+                dto.price(),
+                dto.dineInAvailable(),
+                dto.imageUrl()
+        );
+    }
+
+    private static RestaurantResponse.MenuResponse toMenuResponse(Menu menu) {
+        return new RestaurantResponse.MenuResponse(
+                menu.getId(),
+                menu.getName(),
+                menu.getDescription(),
+                menu.getPrice().doubleValue(),
+                menu.isDineInAvailable(),
+                menu.getImageUrl()
+        );
+    }
+}

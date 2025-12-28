@@ -10,12 +10,14 @@ public class FindAllAddressUseCaseImpl implements FindAllAddressUseCase {
 
     private final AddressRepositoryPort addressRepository;
 
+
     public FindAllAddressUseCaseImpl(AddressRepositoryPort addressRepository) {
         this.addressRepository = addressRepository;
     }
 
+
     @Override
-    public List<Address> execute(String userId) {
-        return addressRepository.findAllByUserId(userId);
+    public List<Address> execute() {
+        return addressRepository.findAll();
     }
 }

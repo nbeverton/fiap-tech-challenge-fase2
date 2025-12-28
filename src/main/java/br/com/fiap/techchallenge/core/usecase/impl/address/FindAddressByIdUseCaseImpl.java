@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public class FindAddressByIdUseCaseImpl implements FindAddressByIdUseCase {
 
-    private final AddressRepositoryPort repository;
+    private final AddressRepositoryPort addressRepository;
 
-    public FindAddressByIdUseCaseImpl(AddressRepositoryPort repository) {
-        this.repository = repository;
+
+    public FindAddressByIdUseCaseImpl(AddressRepositoryPort addressRepository){
+        this.addressRepository = addressRepository;
     }
 
     @Override
-    public Optional<Address> execute(String id, String userId) {
-        return repository.findByIdAndUserId(id, userId);
+    public Optional<Address> execute(String id) {
+        return addressRepository.findById(id);
     }
 }
-

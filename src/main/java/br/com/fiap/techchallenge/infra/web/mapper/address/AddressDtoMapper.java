@@ -9,10 +9,9 @@ public class AddressDtoMapper {
 
     private AddressDtoMapper(){}
 
-    public static Address toDomain(CreateAddressRequest request, String userId){
+    public static Address toDomain(CreateAddressRequest request){
 
         return new Address(
-                userId,
                 request.postalCode(),
                 request.streetName(),
                 request.streetNumber(),
@@ -24,11 +23,9 @@ public class AddressDtoMapper {
         );
     }
 
-    public static Address toDomain(UpdateAddressRequest request, String addressId, String userId){
+    public static Address toDomain(UpdateAddressRequest request){
 
         return new Address(
-                addressId,
-                userId,
                 request.postalCode(),
                 request.streetName(),
                 request.streetNumber(),
@@ -40,18 +37,18 @@ public class AddressDtoMapper {
         );
     }
 
-    public static AddressResponse toResponse(Address address) {
+    public static AddressResponse toResponse(Address response){
 
         return new AddressResponse(
-                address.getId(),
-                address.getPostalCode(),
-                address.getStreetName(),
-                address.getStreetNumber(),
-                address.getAdditionalInfo(),
-                address.getNeighborhood(),
-                address.getCity(),
-                address.getStateProvince(),
-                address.getCountry()
+                response.getId(),
+                response.getPostalCode(),
+                response.getStreetName(),
+                response.getStreetNumber(),
+                response.getAdditionalInfo(),
+                response.getNeighborhood(),
+                response.getCity(),
+                response.getStateProvince(),
+                response.getCountry()
         );
     }
 }
