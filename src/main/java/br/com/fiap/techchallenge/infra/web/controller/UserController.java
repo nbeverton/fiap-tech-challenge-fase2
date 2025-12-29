@@ -58,11 +58,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable String id){
 
-        return findUserByIdUseCase.execute(id)
-                .map(UserDtoMapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        User user = findUserByIdUseCase.execute(id);
+
+        return ResponseEntity.ok(UserDtoMapper.toResponse(user));
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(
