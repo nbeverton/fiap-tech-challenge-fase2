@@ -51,6 +51,12 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
         repo.deleteById(id);
     }
 
+    @Override
+    public Optional<Restaurant> findByAddressId(String addressId) {
+        return repo.findByAddressId(addressId)
+                .map(this::toDomain);
+    }
+
     // ---------- Conversão Domain -> Document ----------
     private RestaurantDocument toEntity(Restaurant restaurant) {
         RestaurantDocument entity = new RestaurantDocument();

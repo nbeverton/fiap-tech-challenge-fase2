@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.core.domain.exception;
 
 public class BusinessException extends RuntimeException {
+
     public BusinessException() {
         super();
     }

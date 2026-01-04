@@ -13,6 +13,8 @@ public class AddressDocument {
     @Id
     private String id;
 
+    private String restaurantId;
+
     private String postalCode;
     private String streetName;
     private int streetNumber;
