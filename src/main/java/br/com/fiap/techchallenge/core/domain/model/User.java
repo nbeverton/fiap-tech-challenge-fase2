@@ -45,6 +45,8 @@ public abstract class User {
         return userType;
     }
 
+    public boolean isOwner() { return UserType.OWNER.equals(this.userType); }
+
     public String getEmail() {
         return email;
     }
