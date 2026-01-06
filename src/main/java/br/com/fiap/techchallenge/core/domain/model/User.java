@@ -27,7 +27,7 @@ public abstract class User {
         this.userType = Objects.requireNonNull(type, "userType must not be null");
         this.email = requireValidEmail(email);
         this.login = requireNonBlank(login, "login");
-        this.password = requireNonBlank(password, "password");
+        this.password = requireNonBlank (password, "password");
     }
 
     private String requireNonBlank(String value, String fieldName) {
