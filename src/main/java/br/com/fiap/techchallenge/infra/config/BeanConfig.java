@@ -5,12 +5,6 @@ import br.com.fiap.techchallenge.core.usecase.impl.restaurant.DeleteRestaurantUs
 import br.com.fiap.techchallenge.core.usecase.impl.restaurant.FindRestaurantByIdUseCaseImpl;
 import br.com.fiap.techchallenge.core.usecase.impl.restaurant.ListRestaurantsUseCaseImpl;
 import br.com.fiap.techchallenge.core.usecase.impl.restaurant.UpdateRestaurantUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.CreateMenuUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.DeleteMenuUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.FindMenuByIdUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.ListMenusUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.ListMenusByRestaurantUseCaseImpl;
-import br.com.fiap.techchallenge.core.usecase.impl.menu.UpdateMenuUseCaseImpl;
 
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.CreateRestaurantUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.DeleteRestaurantUseCase;
@@ -18,14 +12,6 @@ import br.com.fiap.techchallenge.core.usecase.in.restaurant.FindRestaurantByIdUs
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.ListRestaurantsUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.UpdateRestaurantUseCase;
 
-import br.com.fiap.techchallenge.core.usecase.in.menu.CreateMenuUseCase;
-import br.com.fiap.techchallenge.core.usecase.in.menu.DeleteMenuUseCase;
-import br.com.fiap.techchallenge.core.usecase.in.menu.FindMenuByIdUseCase;
-import br.com.fiap.techchallenge.core.usecase.in.menu.ListMenusUseCase;
-import br.com.fiap.techchallenge.core.usecase.in.menu.ListMenusByRestaurantUseCase;
-import br.com.fiap.techchallenge.core.usecase.in.menu.UpdateMenuUseCase;
-
-import br.com.fiap.techchallenge.core.usecase.out.MenuRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.RestaurantRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.UserRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
@@ -77,38 +63,6 @@ public class BeanConfig {
     @Bean
     public ListRestaurantsUseCase listRestaurantsUseCase(RestaurantRepositoryPort repository) {
         return new ListRestaurantsUseCaseImpl(repository);
-    }
-
-    // ===================== Menu UseCases =====================
-
-    @Bean
-    public ListMenusUseCase listMenusUseCase(MenuRepositoryPort repository) {
-        return new ListMenusUseCaseImpl(repository);
-    }
-
-    @Bean
-    public ListMenusByRestaurantUseCase listMenusByRestaurantUseCase(MenuRepositoryPort repository) {
-        return new ListMenusByRestaurantUseCaseImpl(repository);
-    }
-
-    @Bean
-    public CreateMenuUseCase createMenuUseCase(MenuRepositoryPort repository) {
-        return new CreateMenuUseCaseImpl(repository);
-    }
-
-    @Bean
-    public UpdateMenuUseCase updateMenuUseCase(MenuRepositoryPort repository) {
-        return new UpdateMenuUseCaseImpl(repository);
-    }
-
-    @Bean
-    public DeleteMenuUseCase deleteMenuUseCase(MenuRepositoryPort repository) {
-        return new DeleteMenuUseCaseImpl(repository);
-    }
-
-    @Bean
-    public FindMenuByIdUseCase findMenuByIdUseCase(MenuRepositoryPort repository) {
-        return new FindMenuByIdUseCaseImpl(repository);
     }
 
 }

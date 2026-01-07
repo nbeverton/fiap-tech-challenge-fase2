@@ -63,7 +63,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
                 input.getCuisineType(),
                 input.getOpeningHours(),
                 input.getUserId(),
-                existing.getMenu()            // ou input.getMenu(), dependendo da regra de negócio
+                input.getMenu()            // ou existing.getMenu(), dependendo da regra de negócio
         );
 
         return restaurantRepository.save(toSave);

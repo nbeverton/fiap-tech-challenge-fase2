@@ -1,12 +1,12 @@
-package br.com.fiap.techchallenge.infra.persistence.entity;
+package br.com.fiap.techchallenge.infra.persistence.documents.embedded;
 
-public class OpeningHoursEntity {
+public class OpeningHoursEmbedded {
     private String opens;
     private String closes;
 
-    public OpeningHoursEntity() {}
+    public OpeningHoursEmbedded() {}
 
-    public OpeningHoursEntity(String opens, String closes) {
+    public OpeningHoursEmbedded(String opens, String closes) {
         this.opens = opens;
         this.closes = closes;
     }
@@ -27,4 +27,3 @@ public class OpeningHoursEntity {
         this.closes = closes;
     }
 }
-

@@ -1,9 +1,9 @@
-package br.com.fiap.techchallenge.infra.persistence.entity;
+package br.com.fiap.techchallenge.infra.persistence.documents.embedded;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public class MenuEntity {
+public class MenuEmbedded {
 
     @Field
     @Id
@@ -14,10 +14,10 @@ public class MenuEntity {
     private boolean dineInAvailable;
     private String imageUrl;
 
-    public MenuEntity() {
+    public MenuEmbedded() {
     }
 
-    public MenuEntity(String id,
+    public MenuEmbedded(String id,
                       String name,
                       String description,
                       double price,

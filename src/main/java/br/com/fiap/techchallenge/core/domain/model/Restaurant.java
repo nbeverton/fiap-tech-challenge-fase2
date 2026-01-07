@@ -23,12 +23,12 @@ public class Restaurant {
     private final List<Menu> menu;
 
     public Restaurant(String id,
-                      String name,
-                      String addressId,
-                      CuisineType cuisineType,
-                      OpeningHours openingHours,
-                      String userId,
-                      List<Menu> menu) {
+            String name,
+            String addressId,
+            CuisineType cuisineType,
+            OpeningHours openingHours,
+            String userId,
+            List<Menu> menu) {
 
         this.id = requireNonBlank(id, "id");
         this.name = requireNonBlank(name, "name");
@@ -40,11 +40,11 @@ public class Restaurant {
     }
 
     public static Restaurant create(String name,
-                                    String addressId,
-                                    CuisineType cuisineType,
-                                    OpeningHours openingHours,
-                                    String userId,
-                                    List<Menu> menu) {
+            String addressId,
+            CuisineType cuisineType,
+            OpeningHours openingHours,
+            String userId,
+            List<Menu> menu) {
         return new Restaurant(
                 UUID.randomUUID().toString(),
                 name,
@@ -52,8 +52,7 @@ public class Restaurant {
                 cuisineType,
                 openingHours,
                 userId,
-                menu
-        );
+                menu);
     }
 
     private static String requireNonBlank(String value, String fieldName) {
@@ -97,14 +96,15 @@ public class Restaurant {
         Objects.requireNonNull(newMenu, "menu must not be null");
 
         for (Menu m : this.menu) {
-            if (m.getId().equals(newMenu.getId())) {
+            if (m.getId() != null && m.getId().equals(newMenu.getId())) {
                 throw new MenuAlreadyExistsException(newMenu.getId());
             }
         }
 
         List<Menu> newList = new ArrayList<>(this.menu);
         newList.add(newMenu);
-        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId, newList);
+        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId,
+                newList);
     }
 
     public Restaurant updateMenu(Menu updatedMenu) {
@@ -121,11 +121,12 @@ public class Restaurant {
             }
         }
 
-        if (!found){
+        if (!found) {
             throw new MenuNotFoundException(updatedMenu.getId());
         }
 
-        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId, newList);
+        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId,
+                newList);
     }
 
     public Restaurant removeMenu(String menuId) {
@@ -134,18 +135,21 @@ public class Restaurant {
         List<Menu> newList = new ArrayList<>(this.menu);
         boolean removed = newList.removeIf(m -> m.getId().equals(menuId));
 
-        if (!removed){
+        if (!removed) {
             throw new MenuNotFoundException(menuId);
         }
 
-        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId, newList);
+        return new Restaurant(this.id, this.name, this.addressId, this.cuisineType, this.openingHours, this.userId,
+                newList);
     }
 
     // -------------------------------------------------------------------------
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Restaurant that = (Restaurant) o;
         return Objects.equals(id, that.id);
     }

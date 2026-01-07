@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.core.domain.model;
 import br.com.fiap.techchallenge.core.domain.exception.menu.InvalidMenuException;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class Menu {
 
@@ -14,11 +15,11 @@ public class Menu {
     private String imageUrl;
 
     private Menu(String id,
-                 String name,
-                 String description,
-                 BigDecimal price,
-                 boolean dineInAvailable,
-                 String imageUrl) {
+            String name,
+            String description,
+            BigDecimal price,
+            boolean dineInAvailable,
+            String imageUrl) {
 
         this.id = id;
         this.name = requireNonBlank(name, "name");
@@ -29,19 +30,19 @@ public class Menu {
     }
 
     public static Menu create(String name,
-                              String description,
-                              BigDecimal price,
-                              boolean dineInAvailable,
-                              String imageUrl) {
-        return new Menu(null, name, description, price, dineInAvailable, imageUrl);
+            String description,
+            BigDecimal price,
+            boolean dineInAvailable,
+            String imageUrl) {
+        return new Menu(UUID.randomUUID().toString(), name, description, price, dineInAvailable, imageUrl);
     }
 
     public static Menu restore(String id,
-                               String name,
-                               String description,
-                               BigDecimal price,
-                               boolean dineInAvailable,
-                               String imageUrl) {
+            String name,
+            String description,
+            BigDecimal price,
+            boolean dineInAvailable,
+            String imageUrl) {
         return new Menu(id, name, description, price, dineInAvailable, imageUrl);
     }
 
@@ -61,7 +62,6 @@ public class Menu {
         }
         return value;
     }
-
 
     // ✅ GETTERS NECESSÁRIOS
     public String getId() {

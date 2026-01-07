@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.infra.web.controller;
 
+import br.com.fiap.techchallenge.core.domain.model.Menu;
 import br.com.fiap.techchallenge.core.domain.model.Restaurant;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.CreateRestaurantUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.DeleteRestaurantUseCase;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/restaurants")
@@ -30,8 +32,7 @@ public class RestaurantController {
             UpdateRestaurantUseCase updateRestaurantUseCase,
             DeleteRestaurantUseCase deleteRestaurantUseCase,
             FindRestaurantByIdUseCase findRestaurantByIdUseCase,
-            ListRestaurantsUseCase listRestaurantsUseCase
-    ) {
+            ListRestaurantsUseCase listRestaurantsUseCase) {
         this.createRestaurantUseCase = createRestaurantUseCase;
         this.updateRestaurantUseCase = updateRestaurantUseCase;
         this.deleteRestaurantUseCase = deleteRestaurantUseCase;
@@ -41,8 +42,7 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<RestaurantResponse> create(
-            @RequestBody RestaurantRequest request
-    ) {
+            @RequestBody RestaurantRequest request) {
         Restaurant restaurant = RestaurantMapper.toDomain(request);
         Restaurant created = createRestaurantUseCase.execute(restaurant);
 
@@ -63,8 +63,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantResponse> findById(
-            @PathVariable String id
-    ) {
+            @PathVariable String id) {
         Restaurant restaurant = findRestaurantByIdUseCase.execute(id);
         return ResponseEntity.ok(RestaurantMapper.toResponse(restaurant));
     }
@@ -72,8 +71,7 @@ public class RestaurantController {
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantResponse> update(
             @PathVariable String id,
-            @RequestBody RestaurantRequest request
-    ) {
+            @RequestBody RestaurantRequest request) {
         Restaurant restaurant = RestaurantMapper.toDomain(request);
         Restaurant updated = updateRestaurantUseCase.execute(id, restaurant);
 
@@ -82,9 +80,34 @@ public class RestaurantController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable String id
-    ) {
+            @PathVariable String id) {
         deleteRestaurantUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
+
+    // ------------------------------------- Add Menu to Restaurant // -------------------------------------
+    
+    @PostMapping("/{restaurantId}/menus")
+    public ResponseEntity<RestaurantResponse> addMenu(
+            @PathVariable String restaurantId,
+            @RequestBody Menu menuRequest) {
+        Restaurant restaurant = findRestaurantByIdUseCase.execute(restaurantId);
+
+        Menu menu = Menu.restore(
+                UUID.randomUUID().toString(),
+                menuRequest.getName(),
+                menuRequest.getDescription(),
+                menuRequest.getPrice(),
+                menuRequest.isDineInAvailable(),
+                menuRequest.getImageUrl());
+
+        Restaurant updated = restaurant.addMenu(menu);
+
+        Restaurant saved = updateRestaurantUseCase.execute(restaurantId, updated);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(RestaurantMapper.toResponse(saved));
+    }
+
 }

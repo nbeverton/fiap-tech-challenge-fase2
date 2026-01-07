@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.infra.persistence.documents;
 
-import br.com.fiap.techchallenge.infra.persistence.entity.MenuEntity;
+import br.com.fiap.techchallenge.infra.persistence.documents.embedded.MenuEmbedded;
+import br.com.fiap.techchallenge.infra.persistence.documents.embedded.OpeningHoursEmbedded;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -19,12 +20,12 @@ public class RestaurantDocument {
 
     private String cuisineType;
 
-    private OpeningHoursDocument openingHours;
+    private OpeningHoursEmbedded openingHours;
 
     private String userId;
 
     @Field("menu") // mapeia a lista de menus no MongoDB
-    private List<MenuEntity> menu;
+    private List<MenuEmbedded> menu;
 
     private String _class; // opcional, usado pelo Spring Data
 
@@ -43,14 +44,14 @@ public class RestaurantDocument {
     public String getCuisineType() { return cuisineType; }
     public void setCuisineType(String cuisineType) { this.cuisineType = cuisineType; }
 
-    public OpeningHoursDocument getOpeningHours() { return openingHours; }
-    public void setOpeningHours(OpeningHoursDocument openingHours) { this.openingHours = openingHours; }
+    public OpeningHoursEmbedded getOpeningHours() { return openingHours; }
+    public void setOpeningHours(OpeningHoursEmbedded openingHours) { this.openingHours = openingHours; }
 
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
 
-    public List<MenuEntity> getMenu() { return menu; }
-    public void setMenu(List<MenuEntity> menu) { this.menu = menu; }
+    public List<MenuEmbedded> getMenu() { return menu; }
+    public void setMenu(List<MenuEmbedded> menu) { this.menu = menu; }
 
     public String get_class() { return _class; }
     public void set_class(String _class) { this._class = _class; }
