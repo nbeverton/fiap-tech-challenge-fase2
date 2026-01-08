@@ -1,11 +1,12 @@
 package br.com.fiap.techchallenge.infra.web.controller;
 
 import br.com.fiap.techchallenge.core.domain.model.User;
-import br.com.fiap.techchallenge.infra.web.dto.user.CreateUserRequest;
+import br.com.fiap.techchallenge.infra.web.dto.user.CreateUserWithAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.user.UpdateUserRequest;
 import br.com.fiap.techchallenge.infra.web.dto.user.UserResponse;
 import br.com.fiap.techchallenge.infra.web.mapper.user.UserDtoMapper;
 import br.com.fiap.techchallenge.core.usecase.in.user.*;
+import br.com.fiap.techchallenge.infra.web.mapper.user.UserWithAddressDtoMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final CreateUserUseCase createUserUseCase;
+    private final CreateUserWithAddressUseCase createUserWithAddressUseCase;
     private final FindUserByIdUseCase findUserByIdUseCase;
     private final FindAllUsersUseCase findAllUsersUseCase;
     private final UpdateUserUseCase updateUserUseCase;
@@ -23,13 +24,13 @@ public class UserController {
 
 
     public UserController(
-            CreateUserUseCase createUserUseCase,
+            CreateUserWithAddressUseCase createUserWithAddressUseCase,
             FindUserByIdUseCase findUserByIdUseCase,
             FindAllUsersUseCase findAllUsersUseCase,
             UpdateUserUseCase updateUserUseCase,
             DeleteUserUseCase deleteUserUseCase
     ){
-        this.createUserUseCase = createUserUseCase;
+        this.createUserWithAddressUseCase = createUserWithAddressUseCase;
         this.findUserByIdUseCase = findUserByIdUseCase;
         this.findAllUsersUseCase = findAllUsersUseCase;
         this.updateUserUseCase = updateUserUseCase;
@@ -37,9 +38,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody CreateUserRequest input){
+    public ResponseEntity<UserResponse> create(@RequestBody CreateUserWithAddressRequest request){
 
-        User user = createUserUseCase.execute(UserDtoMapper.toDomain(input));
+        User user = createUserWithAddressUseCase.execute(UserWithAddressDtoMapper.toInput(request));
 
         return ResponseEntity.status(201).body(UserDtoMapper.toResponse(user));
     }
