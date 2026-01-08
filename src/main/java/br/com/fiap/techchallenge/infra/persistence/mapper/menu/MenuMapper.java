@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.infra.persistence.mapper.menu;
 
-import br.com.fiap.techchallenge.core.domain.model.Menu;
+import br.com.fiap.techchallenge.core.domain.valueobjects.Menu;
 import br.com.fiap.techchallenge.infra.web.dto.menu.MenuRequest;
 import br.com.fiap.techchallenge.infra.web.dto.menu.MenuResponse;
 

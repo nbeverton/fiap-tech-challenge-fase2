@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.infra.web.controller;
 
-import br.com.fiap.techchallenge.core.domain.model.Menu;
 import br.com.fiap.techchallenge.core.domain.model.Restaurant;
+import br.com.fiap.techchallenge.core.domain.valueobjects.Menu;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.CreateRestaurantUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.DeleteRestaurantUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.restaurant.FindRestaurantByIdUseCase;

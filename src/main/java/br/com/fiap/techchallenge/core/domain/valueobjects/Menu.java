@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.core.domain.model;
+package br.com.fiap.techchallenge.core.domain.valueobjects;
 
 import br.com.fiap.techchallenge.core.domain.exception.menu.InvalidMenuException;
 

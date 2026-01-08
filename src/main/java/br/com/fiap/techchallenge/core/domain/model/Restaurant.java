@@ -5,6 +5,8 @@ import br.com.fiap.techchallenge.core.domain.exception.BusinessException;
 import br.com.fiap.techchallenge.core.domain.exception.NotFoundException;
 import br.com.fiap.techchallenge.core.domain.exception.menu.MenuAlreadyExistsException;
 import br.com.fiap.techchallenge.core.domain.exception.menu.MenuNotFoundException;
+import br.com.fiap.techchallenge.core.domain.valueobjects.Menu;
+import br.com.fiap.techchallenge.core.domain.valueobjects.OpeningHours;
 
 import java.util.ArrayList;
 import java.util.List;
