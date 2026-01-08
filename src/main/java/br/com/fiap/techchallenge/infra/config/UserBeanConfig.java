@@ -1,7 +1,10 @@
 package br.com.fiap.techchallenge.infra.config;
 
+import br.com.fiap.techchallenge.core.domain.model.UserAddress;
 import br.com.fiap.techchallenge.core.usecase.impl.user.*;
 import br.com.fiap.techchallenge.core.usecase.in.user.*;
+import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
+import br.com.fiap.techchallenge.core.usecase.out.UserAddressRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.UserRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +13,16 @@ import org.springframework.context.annotation.Configuration;
 public class UserBeanConfig {
 
     @Bean
-    public CreateUserUseCase createUserUseCase(UserRepositoryPort repository){
-        return new CreateUserUseCaseImpl(repository);
+    public CreateUserWithAddressUseCase createUserUseCase(
+            UserRepositoryPort userRepository,
+            AddressRepositoryPort addressRepository,
+            UserAddressRepositoryPort userAddressRepository
+    ){
+        return new CreateUserWithAddressUseCaseImpl(
+                userRepository,
+                userAddressRepository,
+                addressRepository
+        );
     }
 
     @Bean
