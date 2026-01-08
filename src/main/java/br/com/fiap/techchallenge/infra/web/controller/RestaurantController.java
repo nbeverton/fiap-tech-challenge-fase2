@@ -85,8 +85,9 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
-    // ------------------------------------- Add Menu to Restaurant // -------------------------------------
-    
+    // -------------------------------------Menu to
+    // Restaurant-------------------------------------
+
     @PostMapping("/{restaurantId}/menus")
     public ResponseEntity<RestaurantResponse> addMenu(
             @PathVariable String restaurantId,
@@ -101,13 +102,19 @@ public class RestaurantController {
                 menuRequest.isDineInAvailable(),
                 menuRequest.getImageUrl());
 
-        Restaurant updated = restaurant.addMenu(menu);
-
-        Restaurant saved = updateRestaurantUseCase.execute(restaurantId, updated);
+        Restaurant saved = updateRestaurantUseCase.execute(restaurantId, restaurant.addMenu(menu));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(RestaurantMapper.toResponse(saved));
+    }
+
+    @GetMapping("/{restaurantId}/menus")
+    public ResponseEntity<List<Menu>> getMenus(
+            @PathVariable String restaurantId) {
+
+        Restaurant restaurant = findRestaurantByIdUseCase.execute(restaurantId);
+        return ResponseEntity.ok(restaurant.getMenu());
     }
 
 }
