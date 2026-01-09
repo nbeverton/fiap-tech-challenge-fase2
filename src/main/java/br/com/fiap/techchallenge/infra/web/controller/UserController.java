@@ -1,12 +1,18 @@
 package br.com.fiap.techchallenge.infra.web.controller;
 
 import br.com.fiap.techchallenge.core.domain.model.User;
+import br.com.fiap.techchallenge.core.usecase.in.useraddress.AddAddressToUserUseCase;
 import br.com.fiap.techchallenge.infra.web.dto.user.CreateUserWithAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.user.UpdateUserRequest;
 import br.com.fiap.techchallenge.infra.web.dto.user.UserResponse;
+import br.com.fiap.techchallenge.infra.web.dto.useraddress.AddAddressToUserRequest;
+import br.com.fiap.techchallenge.infra.web.dto.useraddress.UserAddressSummaryResponse;
 import br.com.fiap.techchallenge.infra.web.mapper.user.UserDtoMapper;
 import br.com.fiap.techchallenge.core.usecase.in.user.*;
 import br.com.fiap.techchallenge.infra.web.mapper.user.UserWithAddressDtoMapper;
+import br.com.fiap.techchallenge.infra.web.mapper.useraddress.AddAddressToUserDtoMapper;
+import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressSummaryDtoMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +23,7 @@ import java.util.List;
 public class UserController {
 
     private final CreateUserWithAddressUseCase createUserWithAddressUseCase;
+    private final AddAddressToUserUseCase addAddressToUserUseCase;
     private final FindUserByIdUseCase findUserByIdUseCase;
     private final FindAllUsersUseCase findAllUsersUseCase;
     private final UpdateUserUseCase updateUserUseCase;
@@ -24,13 +31,14 @@ public class UserController {
 
 
     public UserController(
-            CreateUserWithAddressUseCase createUserWithAddressUseCase,
+            CreateUserWithAddressUseCase createUserWithAddressUseCase, AddAddressToUserUseCase addAddressToUserUseCase,
             FindUserByIdUseCase findUserByIdUseCase,
             FindAllUsersUseCase findAllUsersUseCase,
             UpdateUserUseCase updateUserUseCase,
             DeleteUserUseCase deleteUserUseCase
     ){
         this.createUserWithAddressUseCase = createUserWithAddressUseCase;
+        this.addAddressToUserUseCase = addAddressToUserUseCase;
         this.findUserByIdUseCase = findUserByIdUseCase;
         this.findAllUsersUseCase = findAllUsersUseCase;
         this.updateUserUseCase = updateUserUseCase;
@@ -43,6 +51,23 @@ public class UserController {
         User user = createUserWithAddressUseCase.execute(UserWithAddressDtoMapper.toInput(request));
 
         return ResponseEntity.status(201).body(UserDtoMapper.toResponse(user));
+    }
+
+    @PostMapping("/{userId}/addresses")
+    public ResponseEntity<List<UserAddressSummaryResponse>> addAddressToUser(
+            @PathVariable String userId,
+            @RequestBody AddAddressToUserRequest request
+            ){
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        addAddressToUserUseCase.execute(
+                                AddAddressToUserDtoMapper.toInput(userId,request)
+                        )
+                                .stream()
+                                .map(UserAddressSummaryDtoMapper::toResponse)
+                                .toList()
+                );
     }
 
     @GetMapping
