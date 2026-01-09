@@ -10,6 +10,6 @@ public record UserAddressSummaryOutput(
         String city,
         String stateProvince,
         String additionalInfo,
-        boolean principal         
+        boolean principal
 ) {
 }
