@@ -8,10 +8,6 @@ import br.com.fiap.techchallenge.core.usecase.in.useraddress.AddAddressToUserInp
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.AddAddressToUserUseCase;
 import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.UserAddressRepositoryPort;
-import br.com.fiap.techchallenge.core.usecase.out.UserAddressSummaryOutput;
-
-import java.util.Comparator;
-import java.util.List;
 
 public class AddAddressToUserUseCaseImpl implements AddAddressToUserUseCase {
 
@@ -26,13 +22,13 @@ public class AddAddressToUserUseCaseImpl implements AddAddressToUserUseCase {
     }
 
     @Override
-    public List<UserAddressSummaryOutput> execute(AddAddressToUserInput input) {
+    public UserAddress execute(AddAddressToUserInput input) {
 
         //1. Validate if the user exists
         findUserByIdUseCase.execute(input.userId());
 
         //2. Validate if the address exists
-        Address newAddress = addressRepository.findById(input.addressId())
+        Address address = addressRepository.findById(input.addressId())
                 .orElseThrow(() ->
                         new AddressNotFoundException(input.addressId())
                 );
@@ -48,38 +44,13 @@ public class AddAddressToUserUseCaseImpl implements AddAddressToUserUseCase {
         //4. Create a new link as primary
         UserAddress newUserAddress = new UserAddress(
                 input.userId(),
-                newAddress.getId(),
+                address.getId(),
                 input.addressType(),
                 input.label(),
                 true
         );
 
-        userAddressRepository.save(newUserAddress);
-
-        //5. Search all user's links
-        List<UserAddress> links =
-                userAddressRepository.findByUserId(input.userId());
-
-        //6. Assembles the summary output + sorts (principal first)
-        return links.stream()
-                .map(link -> {
-                    Address address = addressRepository.findById(link.getAddressId())
-                            .orElseThrow(() ->
-                                    new AddressNotFoundException(link.getUserId())
-                            );
-
-                    return new UserAddressSummaryOutput(
-                            link.getType(),
-                            address.getStreetName(),
-                            address.getStreetNumber(),
-                            address.getNeighborhood(),
-                            address.getCity(),
-                            address.getStateProvince(),
-                            address.getAdditionalInfo(),
-                            link.isPrincipal()
-                    );
-                })
-                .sorted(Comparator.comparing(UserAddressSummaryOutput::principal).reversed())
-                .toList();
+        //5. Persists and returns
+        return userAddressRepository.save(newUserAddress);
     }
 }
