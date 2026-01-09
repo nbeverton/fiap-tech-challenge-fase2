@@ -5,10 +5,13 @@ import br.com.fiap.techchallenge.core.usecase.in.address.FindAddressByIdUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.user.FindUserByIdUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.FindUserAddressByAddressIdUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.FindUserAddressByUserIdUseCase;
+import br.com.fiap.techchallenge.core.usecase.in.useraddress.GetUserAddressesSummaryUseCase;
 import br.com.fiap.techchallenge.infra.web.dto.address.AddressResponse;
 import br.com.fiap.techchallenge.infra.web.dto.user.UserResponse;
+import br.com.fiap.techchallenge.infra.web.dto.useraddress.UserAddressSummaryResponse;
 import br.com.fiap.techchallenge.infra.web.mapper.address.AddressDtoMapper;
 import br.com.fiap.techchallenge.infra.web.mapper.user.UserDtoMapper;
+import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressSummaryDtoMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,31 +24,26 @@ import java.util.List;
 public class UserAddressQueryController {
 
     private final FindUserAddressByAddressIdUseCase findUserAddressByAddressIdUseCase;
-    private final FindUserAddressByUserIdUseCase findUserAddressByUserIdUseCase;
     private final FindUserByIdUseCase findUserByIdUseCase;
     private final FindAddressByIdUseCase findAddressByIdUseCase;
+    private final GetUserAddressesSummaryUseCase getUserAddressesSummaryUseCase;
 
-    public UserAddressQueryController(FindUserAddressByAddressIdUseCase findUserAddressByAddressIdUseCase, FindUserAddressByUserIdUseCase findUserAddressByUserIdUseCase, FindUserByIdUseCase findUserByIdUseCase, FindAddressByIdUseCase findAddressByIdUseCase) {
+    public UserAddressQueryController(FindUserAddressByAddressIdUseCase findUserAddressByAddressIdUseCase, FindUserByIdUseCase findUserByIdUseCase, FindAddressByIdUseCase findAddressByIdUseCase, GetUserAddressesSummaryUseCase getUserAddressesSummaryUseCase) {
 
         this.findUserAddressByAddressIdUseCase = findUserAddressByAddressIdUseCase;
-        this.findUserAddressByUserIdUseCase = findUserAddressByUserIdUseCase;
         this.findUserByIdUseCase = findUserByIdUseCase;
         this.findAddressByIdUseCase = findAddressByIdUseCase;
+        this.getUserAddressesSummaryUseCase = getUserAddressesSummaryUseCase;
     }
 
     @GetMapping("/users/{userId}/addresses")
-    public List<AddressResponse> getAddressByUser(
+    public List<UserAddressSummaryResponse> getAddressesByUser(
             @PathVariable String userId
     ){
 
-        findUserByIdUseCase.execute(userId);
-
-        List<UserAddress> links =
-                findUserAddressByUserIdUseCase.execute(userId);
-
-        return links.stream()
-                .map(link -> findAddressByIdUseCase.execute(link.getAddressId()))
-                .map(AddressDtoMapper::toResponse)
+        return getUserAddressesSummaryUseCase.execute(userId)
+                .stream()
+                .map(UserAddressSummaryDtoMapper::toResponse)
                 .toList();
     }
 
