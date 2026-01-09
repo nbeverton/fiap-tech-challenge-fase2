@@ -1,8 +1,10 @@
 package br.com.fiap.techchallenge.core.usecase.in.useraddress;
 
-import br.com.fiap.techchallenge.core.domain.model.UserAddress;
+import br.com.fiap.techchallenge.core.usecase.out.UserAddressSummaryOutput;
+
+import java.util.List;
 
 public interface AddAddressToUserUseCase {
 
-    UserAddress execute(AddAddressToUserInput input);
+    List<UserAddressSummaryOutput> execute(AddAddressToUserInput input);
 }
