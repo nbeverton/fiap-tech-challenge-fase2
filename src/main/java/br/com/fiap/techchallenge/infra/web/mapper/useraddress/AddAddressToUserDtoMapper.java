@@ -9,7 +9,7 @@ public class AddAddressToUserDtoMapper {
     private AddAddressToUserDtoMapper(){}
 
 
-    public AddAddressToUserInput toUserInput(
+    public static AddAddressToUserInput toInput(
             String userId,
             AddAddressToUserRequest request
     ){
