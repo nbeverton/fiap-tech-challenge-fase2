@@ -70,6 +70,9 @@ public class UserAddress {
         return principal;
     }
 
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
 
     public void updateType(AddressType type) {
         this.type = requireNonNull(type, "type must not be null");

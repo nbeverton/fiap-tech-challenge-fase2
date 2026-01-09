@@ -26,6 +26,20 @@ public class UserAddressBeanConfig {
         );
     }
 
+    @Bean
+    public AddAddressToUserUseCase addAddressToUserUseCase(
+            FindUserByIdUseCase findUserByIdUseCase,
+            AddressRepositoryPort addressRepository,
+            UserAddressRepositoryPort userAddressRepository
+    ){
+
+        return new AddAddressToUserUseCaseImpl(
+                findUserByIdUseCase,
+                addressRepository,
+                userAddressRepository
+        );
+    }
+
 
     @Bean
     public DeleteUserAddressUseCase deleteUserAddressUseCase(UserAddressRepositoryPort repository){
