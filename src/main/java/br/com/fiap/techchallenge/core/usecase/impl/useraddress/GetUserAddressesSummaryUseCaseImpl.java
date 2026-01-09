@@ -9,6 +9,7 @@ import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.UserAddressRepositoryPort;
 import br.com.fiap.techchallenge.core.usecase.out.UserAddressSummaryOutput;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class GetUserAddressesSummaryUseCaseImpl implements GetUserAddressesSummaryUseCase {
@@ -53,6 +54,7 @@ public class GetUserAddressesSummaryUseCaseImpl implements GetUserAddressesSumma
                             link.isPrincipal()
                     );
                 })
+                .sorted(Comparator.comparing(UserAddressSummaryOutput::principal).reversed())
                 .toList();
     }
 }
