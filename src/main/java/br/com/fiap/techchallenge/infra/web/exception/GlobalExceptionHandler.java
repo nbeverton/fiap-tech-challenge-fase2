@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge.core.domain.exception.BusinessException;
 import br.com.fiap.techchallenge.core.domain.exception.address.AddressNotFoundException;
 import br.com.fiap.techchallenge.core.domain.exception.address.CannotDeletePrincipalAddressException;
 import br.com.fiap.techchallenge.core.domain.exception.user.UserNotFoundException;
+import br.com.fiap.techchallenge.core.domain.exception.useraddress.CannotDeletePrimaryAddressException;
 import br.com.fiap.techchallenge.core.domain.exception.useraddress.CannotRemovePrincipalAddressException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CannotDeletePrincipalAddressException.class)
     public ResponseEntity<ApiErrorResponse> handleCannotDeletePrincipalAddress(CannotDeletePrincipalAddressException ex){
+
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(CannotDeletePrimaryAddressException.class)
+    public ResponseEntity<ApiErrorResponse> handleCannotDeletePrimaryAddress(CannotDeletePrimaryAddressException ex){
 
         ApiErrorResponse error = new ApiErrorResponse(
                 HttpStatus.CONFLICT.value(),
