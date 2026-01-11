@@ -26,23 +26,23 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     @Override
     public User execute(CreateUserInput input) {
 
-        //1. Create User
+        // 1. VALIDATE address
+        Address address = addressRepository.findById(input.addressId())
+                .orElseThrow(() ->
+                        new AddressNotFoundException(input.addressId())
+                );
+
+        // 2. Create User
         User user = new User(
                 input.name(),
                 input.userType(),
                 input.email(),
                 input.login(),
                 input.password()
-        ){};
+        ) {};
 
-        //2. Persist the user
+        // 3. Persist User
         User savedUser = userRepository.save(user);
-
-        //3. Validates if the address exists
-        Address address = addressRepository.findById(input.addressId())
-                .orElseThrow(()->
-                        new AddressNotFoundException(input.addressId())
-                );
 
         //4. Creates the UserAddress link (first address is always main/primary)
         UserAddress userAddress = new UserAddress(
