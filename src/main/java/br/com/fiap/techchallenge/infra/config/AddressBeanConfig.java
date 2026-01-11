@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.infra.config;
 import br.com.fiap.techchallenge.core.usecase.impl.address.*;
 import br.com.fiap.techchallenge.core.usecase.in.address.*;
 import br.com.fiap.techchallenge.core.usecase.out.AddressRepositoryPort;
+import br.com.fiap.techchallenge.core.usecase.out.UserAddressRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,9 +35,15 @@ public class AddressBeanConfig {
     }
 
     @Bean
-    public DeleteAddressUseCase deleteAddressUseCase(AddressRepositoryPort repository){
+    public DeleteAddressUseCase deleteAddressUseCase(
+            AddressRepositoryPort addressRepository,
+            UserAddressRepositoryPort userAddressRepository
+    ){
 
-        return new DeleteAddressUseCaseImpl(repository);
+        return new DeleteAddressUseCaseImpl(
+                addressRepository,
+                userAddressRepository
+        );
     }
 
 }
