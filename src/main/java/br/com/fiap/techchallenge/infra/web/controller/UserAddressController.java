@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.infra.web.controller;
 
-import br.com.fiap.techchallenge.core.domain.enums.AddressType;
 import br.com.fiap.techchallenge.core.domain.model.UserAddress;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.CreateUserAddressUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.DeleteUserAddressUseCase;
@@ -8,6 +7,7 @@ import br.com.fiap.techchallenge.core.usecase.in.useraddress.UpdateUserAddressUs
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.CreateUserAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.UpdateUserAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.UserAddressResponse;
+import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UpdateUserAddressDtoMapper;
 import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,9 +67,9 @@ public class UserAddressController {
         UserAddress update =
                 updateUserAddressUseCase.execute(
                         id,
-                        AddressType.valueOf(request.type()),
-                        request.label(),
-                        request.principal()
+                        UpdateUserAddressDtoMapper.toAddressType(request),
+                        UpdateUserAddressDtoMapper.toLabel(request),
+                        UpdateUserAddressDtoMapper.toPrincipal(request)
                 );
 
         return ResponseEntity.ok(
