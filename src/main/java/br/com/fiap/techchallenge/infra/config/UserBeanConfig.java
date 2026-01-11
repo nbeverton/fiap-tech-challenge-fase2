@@ -41,7 +41,13 @@ public class UserBeanConfig {
     }
 
     @Bean
-    public DeleteUserUseCase deleteUserUseCase(UserRepositoryPort repository){
-        return new DeleteUserUseCaseImpl(repository);
+    public DeleteUserUseCase deleteUserUseCase(
+            UserRepositoryPort userRepository,
+            UserAddressRepositoryPort userAddressRepository
+    ){
+        return new DeleteUserUseCaseImpl(
+                userRepository,
+                userAddressRepository
+        );
     }
 }
