@@ -14,4 +14,13 @@ public class CannotDeletePrimaryAddressException extends RuntimeException {
                 + String.join(", ", userIds)
         );
     }
+
+    public CannotDeletePrimaryAddressException(String userId) {
+
+        super(
+                "It is not allowed to remove the primary address of the user "
+                        + userId
+                        + " without setting another address as primary."
+        );
+    }
 }
