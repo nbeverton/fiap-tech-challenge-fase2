@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.core.usecase.impl.address;
 
 import br.com.fiap.techchallenge.core.domain.exception.address.AddressNotFoundException;
+import br.com.fiap.techchallenge.core.domain.exception.address.CannotDeletePrincipalAddressException;
 import br.com.fiap.techchallenge.core.domain.exception.useraddress.CannotRemovePrincipalAddressException;
 import br.com.fiap.techchallenge.core.domain.model.UserAddress;
 import br.com.fiap.techchallenge.core.usecase.in.address.DeleteAddressUseCase;
@@ -29,21 +30,27 @@ public class DeleteAddressUseCaseImpl implements DeleteAddressUseCase {
                 .orElseThrow(() -> new AddressNotFoundException(id));
 
         // 2. Find links with users
-        List<UserAddress> links =
-                userAddressRepository.findByAddressId(id);
+        List<UserAddress> principalLinks =
+                userAddressRepository.findPrincipalsByAddressId(id);
 
         // 3. Rule: cannot delete a primary address
-        boolean hasPrincipalLink = links.stream()
-                        .anyMatch(UserAddress::isPrincipal);
+        if (!principalLinks.isEmpty()) {
 
-        if(hasPrincipalLink){
-            throw new CannotRemovePrincipalAddressException(id);
+            List<String> userIds = principalLinks.stream()
+                    .map(UserAddress::getUserId)
+                    .toList();
+
+            throw new CannotDeletePrincipalAddressException(id, userIds);
         }
 
+
         // 4. Remove secondary links
-        links.forEach(link ->
-                userAddressRepository.deleteById(link.getId())
-        );
+        List<UserAddress> secondaryLinks =
+                userAddressRepository.findByAddressId(id);
+
+        for (UserAddress link : secondaryLinks) {
+            userAddressRepository.deleteById(link.getId());
+        }
 
         // 5. Delete the Address
         addressRepository.delete(id);
