@@ -60,7 +60,7 @@ public class UserAddressRepositoryAdapter implements UserAddressRepositoryPort {
 
     @Override
     public List<UserAddress> findPrincipalsById(String id) {
-        return repository.findById(id)
+        return repository.findByIdAndPrincipalTrue(id)
                 .stream()
                 .map(UserAddressMapper::toDomain)
                 .toList();
