@@ -93,4 +93,12 @@ public class UserAddressBeanConfig {
                 addressRepositoryPort
         );
     }
+
+
+    @Bean
+    public FindAllUserAddressUseCase findAllUserAddressUseCase(
+            UserAddressRepositoryPort userAddressRepository
+    ){
+        return new FindAllUserAddressUseCaseImpl(userAddressRepository);
+    }
 }
