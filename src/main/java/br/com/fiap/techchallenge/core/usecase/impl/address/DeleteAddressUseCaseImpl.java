@@ -37,8 +37,7 @@ public class DeleteAddressUseCaseImpl implements DeleteAddressUseCase {
                     .map(UserAddress::getUserId)
                     .toList();
 
-            // Regra de negócio: não pode apagar endereço que é principal
-            throw new CannotDeletePrimaryAddressException(addressId, userIds);
+            throw CannotDeletePrimaryAddressException.forAddress(id,userIds);
         }
 
         // 3. Remove TODOS os vínculos remanescentes (secundários)

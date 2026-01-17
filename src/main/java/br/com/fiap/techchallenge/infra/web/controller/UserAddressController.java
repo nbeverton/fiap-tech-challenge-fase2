@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.infra.web.controller;
 import br.com.fiap.techchallenge.core.domain.model.UserAddress;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.CreateUserAddressUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.DeleteUserAddressUseCase;
+import br.com.fiap.techchallenge.core.usecase.in.useraddress.FindAllUserAddressUseCase;
 import br.com.fiap.techchallenge.core.usecase.in.useraddress.UpdateUserAddressUseCase;
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.CreateUserAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.UpdateUserAddressRequest;
@@ -11,25 +12,28 @@ import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UpdateUserAddressD
 import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/user-addresses")
 public class UserAddressController {
 
     private final CreateUserAddressUseCase createUserAddressUseCase;
     private final DeleteUserAddressUseCase deleteUserAddressUseCase;
     private final UpdateUserAddressUseCase updateUserAddressUseCase;
+    private final FindAllUserAddressUseCase findAllUserAddressUseCase;
 
     public UserAddressController(
             CreateUserAddressUseCase createUserAddressUseCase,
             DeleteUserAddressUseCase deleteUserAddressUseCase,
-            UpdateUserAddressUseCase updateUserAddressUseCase
+            UpdateUserAddressUseCase updateUserAddressUseCase, FindAllUserAddressUseCase findAllUserAddressUseCase
     ) {
         this.createUserAddressUseCase = createUserAddressUseCase;
         this.deleteUserAddressUseCase = deleteUserAddressUseCase;
         this.updateUserAddressUseCase = updateUserAddressUseCase;
+        this.findAllUserAddressUseCase = findAllUserAddressUseCase;
     }
 
 
@@ -75,5 +79,16 @@ public class UserAddressController {
         return ResponseEntity.ok(
                 UserAddressDtoMapper.toResponse(update)
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserAddressResponse>> findAll(){
+
+        List<UserAddressResponse> usersAddresses = findAllUserAddressUseCase.execute()
+                .stream()
+                .map(UserAddressDtoMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(usersAddresses);
     }
 }

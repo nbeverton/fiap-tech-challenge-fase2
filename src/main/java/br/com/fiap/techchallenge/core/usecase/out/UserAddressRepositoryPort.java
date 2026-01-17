@@ -11,6 +11,8 @@ public interface UserAddressRepositoryPort {
 
     void deleteById(String id);
 
+    List<UserAddress> findAll();
+
     List<UserAddress> findByAddressId(String addressId);
 
     List<UserAddress> findPrincipalsByAddressId(String addressId);

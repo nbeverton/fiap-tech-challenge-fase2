@@ -26,6 +26,11 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
     }
 
     @Override
+    public boolean existsByUserId(String userId) {
+        return repo.existsByUserId(userId);
+    }
+
+    @Override
     public Restaurant save(Restaurant restaurant) {
         RestaurantDocument entity = toEntity(restaurant);
         RestaurantDocument saved = repo.save(entity);
@@ -58,7 +63,7 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
 
     @Override
     public Optional<Restaurant> findByName(String name) {
-        return repo.findByName(name)      // ou findByNameIgnoreCase(name)
+        return repo.findByName(name) // ou findByNameIgnoreCase(name)
                 .map(this::toDomain);
     }
 
@@ -90,16 +95,16 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
 
     // ---------- Conversão Document -> Domain ----------
     private Restaurant toDomain(RestaurantDocument entity) {
-        List<Menu> menu = entity.getMenu() == null ? List.of() : entity.getMenu().stream()
-                .map(this::menuToDomain)
-                .collect(Collectors.toList());
+        List<Menu> menu = entity.getMenu() == null ? List.of()
+                : entity.getMenu().stream()
+                        .map(this::menuToDomain)
+                        .collect(Collectors.toList());
 
         OpeningHours opening = null;
         if (entity.getOpeningHours() != null) {
             opening = new OpeningHours(
                     entity.getOpeningHours().getOpens(),
-                    entity.getOpeningHours().getCloses()
-            );
+                    entity.getOpeningHours().getCloses());
         }
 
         CuisineType cuisine;
@@ -120,8 +125,7 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
                 cuisine,
                 opening,
                 entity.getUserId(),
-                menu
-        );
+                menu);
     }
 
     // ---------- Conversão Menu ----------
@@ -143,14 +147,13 @@ public class RestaurantRepositoryAdapter implements RestaurantRepositoryPort {
                 me.getDescription(),
                 BigDecimal.valueOf(me.getPrice()),
                 me.isDineInAvailable(),
-                me.getImageUrl()
-        );
+                me.getImageUrl());
     }
 
     // ---------- Conversão OpeningHours ----------
     private OpeningHoursEmbedded toDocument(OpeningHoursEmbedded entity) {
-        if (entity == null) return null;
+        if (entity == null)
+            return null;
         return new OpeningHoursEmbedded(entity.getOpens(), entity.getCloses());
     }
 }
-
