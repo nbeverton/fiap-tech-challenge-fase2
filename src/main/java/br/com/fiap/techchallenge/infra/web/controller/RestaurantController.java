@@ -10,6 +10,8 @@ import br.com.fiap.techchallenge.core.usecase.in.restaurant.UpdateRestaurantUseC
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantRequest;
 import br.com.fiap.techchallenge.infra.web.dto.restaurant.RestaurantResponse;
 import br.com.fiap.techchallenge.infra.persistence.mapper.restaurant.RestaurantMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,8 @@ public class RestaurantController {
         this.listRestaurantsUseCase = listRestaurantsUseCase;
     }
 
+    @Operation(summary = "Create restaurant", description = "Creates a new restaurant in the system")
+    @ApiResponse(responseCode = "201", description = "Restaurant created successfully")
     @PostMapping
     public ResponseEntity<RestaurantResponse> create(
             @RequestBody RestaurantRequest request) {
@@ -51,6 +55,8 @@ public class RestaurantController {
                 .body(RestaurantMapper.toResponse(created));
     }
 
+    @Operation(summary = "Get all restaurants")
+    @ApiResponse(responseCode = "200")
     @GetMapping
     public ResponseEntity<List<RestaurantResponse>> findAll() {
         List<RestaurantResponse> response = listRestaurantsUseCase.execute()
@@ -61,6 +67,8 @@ public class RestaurantController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Get restaurant by Id")
+    @ApiResponse(responseCode = "200")
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantResponse> findById(
             @PathVariable String id) {
@@ -68,6 +76,8 @@ public class RestaurantController {
         return ResponseEntity.ok(RestaurantMapper.toResponse(restaurant));
     }
 
+    @Operation(summary = "Update restaurant")
+    @ApiResponse(responseCode = "200", description = "Restaurant updated successfully")
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantResponse> update(
             @PathVariable String id,
@@ -78,6 +88,8 @@ public class RestaurantController {
         return ResponseEntity.ok(RestaurantMapper.toResponse(updated));
     }
 
+    @Operation(summary = "Delete restaurant")
+    @ApiResponse(responseCode = "204", description = "Restaurant deleted successfully")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable String id) {
@@ -87,6 +99,8 @@ public class RestaurantController {
 
     // ---------------- Menu to Restaurant
 
+    @Operation(summary = "Create Menu to restaurant")
+    @ApiResponse(responseCode = "201", description = "Menu created successfully")
     @PostMapping("/{restaurantId}/menus")
     public ResponseEntity<RestaurantResponse> addMenu(
             @PathVariable String restaurantId,
@@ -108,6 +122,8 @@ public class RestaurantController {
                 .body(RestaurantMapper.toResponse(saved));
     }
 
+    @Operation(summary = "Get Menus of a restaurant")
+    @ApiResponse(responseCode = "200")
     @GetMapping("/{restaurantId}/menus")
     public ResponseEntity<List<Menu>> getMenus(
             @PathVariable String restaurantId) {
@@ -116,6 +132,8 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant.getMenu());
     }
 
+    @Operation(summary = "Update Menu of a restaurant")
+    @ApiResponse(responseCode = "200", description = "Menu updated successfully")
     @PutMapping("/{restaurantId}/menus/{menuId}")
     public ResponseEntity<RestaurantResponse> updateMenu(
             @PathVariable String restaurantId,
@@ -138,6 +156,8 @@ public class RestaurantController {
         return ResponseEntity.ok(RestaurantMapper.toResponse(saved));
     }
 
+    @Operation(summary = "Delete Menu from a restaurant")
+    @ApiResponse(responseCode = "204", description = "Menu deleted successfully")
     @DeleteMapping("/{restaurantId}/menus/{menuId}")
     public ResponseEntity<RestaurantResponse> deleteMenu(
             @PathVariable String restaurantId,

@@ -1,17 +1,24 @@
 package br.com.fiap.techchallenge.core.domain.valueobjects;
 
 import br.com.fiap.techchallenge.core.domain.exception.menu.InvalidMenuException;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Menu {
 
+    @Schema(example = "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6")
     private String id;
+    @Schema(example = "Prato do dia - Segunda feira")
     private String name;
+    @Schema(example = "Arroz, feijão, bife e salada")
     private String description;
+    @Schema(example = "39.9")
     private BigDecimal price;
+    @Schema(example = "true")
     private boolean dineInAvailable;
+    @Schema(example = "https://example.com/pf.jpg")
     private String imageUrl;
 
     private Menu(String id,
