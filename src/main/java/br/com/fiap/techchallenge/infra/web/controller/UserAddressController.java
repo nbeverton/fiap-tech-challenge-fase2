@@ -10,6 +10,8 @@ import br.com.fiap.techchallenge.infra.web.dto.useraddress.UpdateUserAddressRequ
 import br.com.fiap.techchallenge.infra.web.dto.useraddress.UserAddressResponse;
 import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UpdateUserAddressDtoMapper;
 import br.com.fiap.techchallenge.infra.web.mapper.useraddress.UserAddressDtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +38,8 @@ public class UserAddressController {
         this.findAllUserAddressUseCase = findAllUserAddressUseCase;
     }
 
-
+    @Operation(summary = "Create link between User and Restaurant")
+    @ApiResponse(responseCode = "201", description = "Link created successfully")
     @PostMapping
     public ResponseEntity<UserAddressResponse> create(
             @RequestBody CreateUserAddressRequest request
@@ -53,7 +56,8 @@ public class UserAddressController {
                 .body(UserAddressDtoMapper.toResponse(created));
     }
 
-
+    @Operation(summary = "Delete link between User and Restaurant")
+    @ApiResponse(responseCode = "204", description = "Link deleted successfully")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id){
@@ -61,7 +65,8 @@ public class UserAddressController {
         deleteUserAddressUseCase.execute(id);
     }
 
-
+    @Operation(summary = "Update link between User and Restaurant")
+    @ApiResponse(responseCode = "200", description = "Link updated successfully")
     @PutMapping("/{id}")
     public ResponseEntity<UserAddressResponse> update(
             @PathVariable String id,
@@ -81,6 +86,8 @@ public class UserAddressController {
         );
     }
 
+    @Operation(summary = "Show all links between User and Restaurant")
+    @ApiResponse(responseCode = "200")
     @GetMapping
     public ResponseEntity<List<UserAddressResponse>> findAll(){
 

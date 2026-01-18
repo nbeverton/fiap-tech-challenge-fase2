@@ -6,6 +6,8 @@ import br.com.fiap.techchallenge.infra.web.dto.address.AddressResponse;
 import br.com.fiap.techchallenge.infra.web.dto.address.CreateAddressRequest;
 import br.com.fiap.techchallenge.infra.web.dto.address.UpdateAddressRequest;
 import br.com.fiap.techchallenge.infra.web.mapper.address.AddressDtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +38,8 @@ public class AddressController {
         this.findAllAddressUseCase = findAllAddressUseCase;
     }
 
-
+    @Operation(summary = "Create Address")
+    @ApiResponse(responseCode = "201", description = "Address created successfully")
     @PostMapping
     public ResponseEntity<AddressResponse> create(@RequestBody CreateAddressRequest input){
 
@@ -45,7 +48,8 @@ public class AddressController {
         return ResponseEntity.status(201).body(AddressDtoMapper.toResponse(address));
     }
 
-
+    @Operation(summary = "Edit Address")
+    @ApiResponse(responseCode = "200", description = "Address edited successfully")
     @PutMapping("/{id}")
     public ResponseEntity<AddressResponse> update(
             @PathVariable String id,
@@ -59,7 +63,8 @@ public class AddressController {
         return ResponseEntity.ok(AddressDtoMapper.toResponse(addressToUpdate));
     }
 
-
+    @Operation(summary = "Delete Address")
+    @ApiResponse(responseCode = "204", description = "Address deleted successfully")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
 
@@ -67,7 +72,8 @@ public class AddressController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @Operation(summary = "Get Address with specific id")
+    @ApiResponse(responseCode = "200")
     @GetMapping("/{id}")
     public ResponseEntity<AddressResponse> findById(@PathVariable String id){
 
@@ -77,7 +83,8 @@ public class AddressController {
     }
 
 
-
+    @Operation(summary = "Show all Address created")
+    @ApiResponse(responseCode = "200")
     @GetMapping
     public ResponseEntity<List<AddressResponse>> findAll(){
 
