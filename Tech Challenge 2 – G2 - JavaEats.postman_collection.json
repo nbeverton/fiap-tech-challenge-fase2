@@ -1,10 +1,11 @@
 {
   "info": {
-    "_postman_id": "0e05e7bf-b508-492c-87cb-04a26c2f5205",
+    "_postman_id": "70fa52ca-4ee2-40f3-9ec6-3e022a44c818",
     "name": "Tech Challenge 2 – G2 - JavaEats",
     "description": "Coleção baseada nos controllers fornecidos:\n\n- Restaurant: /api/v1/restaurants\n    \n- Menu: /api/v1/restaurants/{restaurantId}/menus\n    \n- User: /users\n    \n- Address: /addresses\n    \n\nImportante: RestaurantDocument é persistência. O contrato real de POST/PUT é definido pelos DTOs (RestaurantRequest etc.).  \nOs bodies aqui são exemplos; ajuste conforme validações (@NotNull/@NotBlank) e estrutura do OpeningHours.\n\nFluxo feliz:\n\n1) Create User -> {{userId}}  \n2) Create Address -> {{addressId}}  \n3) Create Restaurant -> {{restaurantId}}  \n4) Create Menu -> {{menuId}}",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "28803614"
+    "_exporter_id": "48649452",
+    "_collection_link": "https://go.postman.co/collection/48649452-70fa52ca-4ee2-40f3-9ec6-3e022a44c818?source=collection_link"
   },
   "item": [
     {
@@ -471,7 +472,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"addressId\": \"{{addressId}}\",\r\n    \"addressType\": \"HOME\",\r\n    \"label\": \"Minha casa\"\r\n}",
+              "raw": "{\r\n    \"addressId\": \"{{addressId}}\",\r\n    \"addressType\": \"WORK\", //HOME, WORK or OTHER\r\n    \"label\": \"Minha casa\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -924,6 +925,35 @@
           "response": []
         },
         {
+          "name": "Delete Address (deletar endereço principal de um Usuário)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", ()=>pm.expect(pm.response.code).to.eql(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/addresses/{{addressId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "addresses",
+                "{{addressId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Create User (com erro tratado)",
           "event": [
             {
@@ -1046,7 +1076,7 @@
           "response": []
         },
         {
-          "name": "Create User (com erro tratado - login) Copy",
+          "name": "Create User (com erro tratado - login)",
           "event": [
             {
               "listen": "test",
@@ -1168,7 +1198,68 @@
           "response": []
         },
         {
-          "name": "Create Restaurant (Com erro tratado - horário) Copy",
+          "name": "Create Restaurant (Com erro tratado - Criar com Usuário tipo cliente)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 201\", ()=>pm.expect(pm.response.code).to.eql(201));",
+                  "let id = null;",
+                  "try {",
+                  "  const j = pm.response.json();",
+                  "  id = (j && (j.id || j.uuid || j._id)) ? (j.id || j.uuid || j._id) : null;",
+                  "} catch(e) {}",
+                  "const loc = pm.response.headers.get('Location');",
+                  "if (!id && loc) {",
+                  "  const parts = loc.split('/');",
+                  "  id = parts[parts.length-1];",
+                  "}",
+                  "if (id) {",
+                  "  pm.environment.set(\"restaurantId\", String(id));",
+                  "  pm.environment.set(\"lastId\", String(id));",
+                  "  console.log(\"✅ Salvou restaurantId =\", id);",
+                  "} else {",
+                  "  console.warn(\"⚠️ Não achei ID no body/header. Ajuste o script conforme seu payload.\");",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Restaurante FIAP\",\n  \"addressId\": \"{{addressId}}\",\n  \"cuisineType\": \"BRAZILIAN\",\n  \"openingHours\": {\n    \"opens\": \"08:00\",\n    \"closes\": \"22:00\"\n  },\n  \"userId\": \"{{userId}}\",\n  \"menu\": []\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/restaurants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "restaurants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Restaurant (Com erro tratado - horário)",
           "event": [
             {
               "listen": "test",
