@@ -72,3 +72,6 @@ The API is fully documented using Swagger UI, allowing users to explore and test
 ## 📝 Notes
 
 This project was developed for academic purposes, following software architecture best practices, REST standards, and clean code principles.
+
+## 📺 Presentation
+You can see this project running in this video: https://www.youtube.com/watch?v=2OjX8FvAW1U
